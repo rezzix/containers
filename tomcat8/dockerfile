@@ -12,4 +12,4 @@ EXPOSE 8080
 CMD ["./bin/catalina.sh", "run"]
 
 # construire avec : docker build -t tomcat8mederp .
-# lancer avec : docker run -p 5555:8080 -v /tmp/webapps:/opt/tomcat/webapps -d --name tomcat.erasme tomcat8mederp
+# lancer avec : docker run -p 5555:8080 -v /tmp/webapps:/opt/tomcat/webapps -d --name tomcat.erasme rezzix/mederp:tomcat8
