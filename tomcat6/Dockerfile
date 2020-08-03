@@ -1,7 +1,8 @@
 FROM java:6
 MAINTAINER GAMACORE info@gamacore.ma
 RUN cd /tmp
-RUN wget http://www.mederp.net/downloads/tomcat-7.tar.gz
+#RUN wget --no-check-certificate https://www.mederp.net/downloads/tomcat-7.tar.gz
+RUN curl https://www.mederp.net/downloads/tomcat-7.tar.gz --output tomcat-7.tar.gz
 RUN tar xvf tomcat-7.tar.gz -C /tmp
 RUN rm -rf  tomcat-7.tar.gz
 RUN mv /tmp/tomcat /opt

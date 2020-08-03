@@ -1,0 +1,75 @@
+version: "3"
+services:
+# Gestion gama core ***************************
+  tomcat_gestion:
+    image: rezzix/mederp:tomcat8
+    container_name: tomcat_gestion
+    volumes:
+      - /usr/local/gestion/webapps:/opt/tomcat/webapps 
+      - /usr/local/gestion/db:/usr/local/gestion 
+      - /usr/local/gestion/logs:/opt/tomcat/logs
+    expose:
+    - 8080
+    ports:
+      - 7010:8080
+    restart: unless-stopped
+
+# medERP Caroline Vuille ***************************
+  tomcat_carolinevuille:
+    image: rezzix/mederp:tomcat6
+    container_name: tomcat_carolinevuille
+    volumes:
+      - /usr/local/mederp/carolinevuille/webapps/:/opt/tomcat/webapps 
+      - /usr/local/mederp/carolinevuille/db/:/usr/local/mederp/ 
+      - /usr/local/mederp/carolinevuille/logs/:/opt/tomcat/logs
+    expose:
+    - 8080
+    ports:
+      - 8010:8080
+    restart: unless-stopped
+
+# medERP Caroline Cote ***************************
+  tomcat_carolinecote:
+    image: rezzix/mederp:tomcat6
+    container_name: tomcat_carolinecote
+    volumes:
+      - /usr/local/mederp/carolinecote/webapps/:/opt/tomcat/webapps 
+      - /usr/local/mederp/carolinecote/db/:/usr/local/mederp/ 
+      - /usr/local/mederp/carolinecote/logs/:/opt/tomcat/logs
+    expose:
+    - 8080
+    ports:
+      - 8020:8080
+    restart: unless-stopped
+
+# medERP Delphine ***************************
+  tomcat_delphine:
+    image: rezzix/mederp:tomcat6
+    container_name: tomcat_delphine
+    volumes:
+      - /usr/local/mederp/delphine/webapps/:/opt/tomcat/webapps 
+      - /usr/local/mederp/delphine/db/:/usr/local/mederp/ 
+      - /usr/local/mederp/delphine/logs/:/opt/tomcat/logs
+    expose:
+    - 8080
+    ports:
+      - 8030:8080
+    restart: unless-stopped
+
+# Frontal Nginx
+  nginx:
+    container_name: v-nginx
+    image: nginx:1.13
+    restart: always
+    ports:
+    - 80:80
+    - 443:443
+    volumes:
+    - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+    - springbootapp
+
+# docker run -d  -p 8010:8080 -v /usr/local/mederp/carolinevuille/webapps/:/opt/tomcat/webapps -v /usr/local/mederp/carolinevuille/db/:/usr/local/mederp/ rezzix/mederp
+# docker run -d  -p 8020:8080 -v /usr/local/mederp/carolinecote/webapps/:/opt/tomcat/webapps -v /usr/local/mederp/carolinecote/db/:/usr/local/mederp/ rezzix/
+# docker run -d  -p 8030:8080 -v /usr/local/mederp/delphine/webapps/:/opt/tomcat/webapps -v /usr/local/mederp/delphine/db/:/usr/local/mederp/ -v /usr/local/mederp/delphine/logs/:/opt/tomcat/logs --name delphine_container rezzix/mederp
+# docker run -p 8001:8080 -v /usr/local/gestion/webapps:/opt/tomcat/webapps -v /usr/local/gestion/db:/usr/local/gestion -v /usr/local/gestion/logs:/opt/tomcat/logs  -d --name tomcat.gestion rezzix/mederp:tomcat8
